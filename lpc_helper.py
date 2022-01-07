@@ -1,0 +1,37 @@
+import numpy as np
+import scipy, scipy.io, scipy.io.wavfile, scipy.signal
+import IPython
+import matplotlib.pyplot as plt
+from vscode_audio import Audio
+
+def play_sound(sound, rate=44100, name=""):
+    """Play a mono 44Khz sound file in the browser"""
+    #return IPython.display.display(IPython.display.Audio(sound,rate=rate))
+    plt.figure()
+    plt.subplot(211)
+    times = np.arange(0, len(sound)/44100, 1/44100)
+    plt.plot(times, sound, 'k-')
+    plt.xlabel("Time (s)")
+    plt.ylabel("sample")
+    plt.subplot(212)
+    #powerSpectrum, freqenciesFound, time, imageAxis = plt.specgram(sound, Fs=rate)
+    #plt.xlabel('Time')
+    #plt.ylabel('Frequency')
+
+    fourier_transform = np.fft.rfft(sound)
+    power_spectrum = 20 * np.log10(np.abs(fourier_transform))
+    frequency = np.linspace(0, rate/2, len(power_spectrum))
+    plt.plot(frequency, power_spectrum)
+    plt.xlim(0,4000)
+    plt.ylim(bottom=0)
+    plt.xlabel('Frequency')
+    plt.ylabel('power(dB)')
+    plt.title(name)
+    plt.show()
+    return IPython.display.display(Audio(sound,sr=rate, name=name))
+
+def load_wave(fname):
+    """Load a 16 bit wave file and return normalised in 0,1 range"""
+    # load and return a wave file
+    sr, wave = scipy.io.wavfile.read(fname)
+    return wave/32768.0
