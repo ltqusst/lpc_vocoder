@@ -5,11 +5,11 @@ import IPython
 import matplotlib.pyplot as plt
 from vscode_audio import Audio
 
-def play_sound(sound, rate=44100, name="", spectrum = 0, waveform = 1):
+def play_sound(sound, rate=44100, name="", spectrum = 0, waveform = 1, figsize=(32,8)):
     """Play a mono 44Khz sound file in the browser"""
     #return IPython.display.display(IPython.display.Audio(sound,rate=rate))
-    if waveform > 0:
-        plt.figure(figsize=(32,8), dpi= 100, facecolor='w', edgecolor='k')
+    if waveform > 0 or spectrum >= 0:
+        plt.figure(figsize=figsize, dpi= 100, facecolor='w', edgecolor='k')
 
         if (isinstance(sound, list)):
             N = len(sound)
@@ -21,16 +21,16 @@ def play_sound(sound, rate=44100, name="", spectrum = 0, waveform = 1):
             plt.show()
             return IPython.display.display(Audio(np.hstack(sound),sr=rate, name=name))
 
-        if spectrum >= 0:
+        if waveform > 0:
             plt.subplot(211)
-        times = np.arange(0, len(sound)/44100, 1/44100)
-        plt.plot(times, sound, 'k-')
-        plt.xlabel("Time (s)")
-        plt.ylabel("sample")
+            times = np.arange(0, len(sound)/44100, 1/44100)
+            plt.plot(times, sound, 'k-')
+            plt.xlabel("Time (s)")
+            plt.ylabel("sample")
 
         if spectrum == 1:
             plt.subplot(212)
-            powerSpectrum, freqenciesFound, time, imageAxis = plt.specgram(sound, Fs=rate, scale='dB')
+            powerSpectrum, freqenciesFound, time, imageAxis = plt.specgram(sound, NFFT=1024, Fs=rate, scale='dB')
             plt.xlabel('Time')
             plt.ylabel('Frequency')
 
