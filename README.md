@@ -53,9 +53,6 @@ D.W. Griffin and J.S. Lim, '"Signal Estimation from Modified Short—Time Fourie
 IEEE Trans. Acoust., Speech Signal Processing, Vol. ASSP—32, No. 2, April
 1984, pp. 236—243.
 
-
-
-
 High Quality Time-Scale Modification for Speech
 Salim Roucos and Alexander M. Wilgus
 1985 IEEE
@@ -63,3 +60,8 @@ Salim Roucos and Alexander M. Wilgus
 `phase unwrapping` 
 
 https://www.surina.net/article/time-and-pitch-scaling.html
+
+## Pitch detection
+
+https://stackoverflow.com/questions/32595404/pitch-detection-in-python
+https://pypi.org/project/crepe/
